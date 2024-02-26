@@ -1,98 +1,128 @@
-"""
-Starting Template
 
-Once you have learned how to use classes, you can begin your program with this
-template.
 
-If Python and Arcade are installed, this example can be run from the command line with:
-python -m arcade.examples.starting_template
-"""
+# Library imports
 import arcade
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-SCREEN_TITLE = "Starting Template"
+# Constants - variables that do not change
+SCREEN_WIDTH = 700
+SCREEN_HEIGHT = 650
+SCREEN_TITLE = "Drawing With Functions Example"
 
 
-class MyGame(arcade.Window):
+def draw_background():
+
+    # Draw the sky in the top two-thirds
+    arcade.draw_lrtb_rectangle_filled(0,
+                                      SCREEN_WIDTH,
+                                      SCREEN_HEIGHT,
+                                      SCREEN_HEIGHT * (1 / 3),
+                                      arcade.color.SKY_BLUE)
+
+    # Draw the ground in the bottom third
+    arcade.draw_lrtb_rectangle_filled(0,
+                                      SCREEN_WIDTH,
+                                      SCREEN_HEIGHT / 3,
+                                      0,
+                                      arcade.color.DARK_SPRING_GREEN)
+
+
+def draw_bird(x, y):
     """
-    Main application class.
-
-    NOTE: Go ahead and delete the methods you don't need.
-    If you do need a method, delete the 'pass' and replace it
-    with your own code. Don't leave 'pass' in this program.
+    Draw a bird using a couple arcs.
     """
+    arcade.draw_arc_outline(x, y, 20, 20, arcade.color.BLACK, 0, 90)
+    arcade.draw_arc_outline(x + 40, y, 20, 20, arcade.color.BLACK, 90, 180)
 
-    def __init__(self, width, height, title):
-        super().__init__(width, height, title)
 
-        arcade.set_background_color(arcade.color.GREEN)
+def draw_pine_tree(x, y):
+    """
+    This function draws a pine tree at the specified location.
+    """
+    # Draw the triangle on top of the trunk
+    arcade.draw_triangle_filled(x + 40, y,
+                                x, y - 100,
+                                x + 80, y - 100,
+                                arcade.csscolor.DARK_GREEN)
 
-        # If you have sprite lists, you should create them here,
-        # and set them to None
-
-    def setup(self):
-        """ Set up the game variables. Call to re-start the game. """
-        # Create your sprites and sprite lists here
-        pass
-
-    def on_draw(self):
-        """
-        Render the screen.
-        """
-
-        # This command should happen before we start drawing. It will clear
-        # the screen to the background color, and erase what we drew last frame.
-        self.clear()
-
-        # Call draw() on all your sprite lists below
-
-    def on_update(self, delta_time):
-        """
-        All the logic to move, and the game logic goes here.
-        Normally, you'll call update() on the sprite lists that
-        need it.
-        """
-        pass
-
-    def on_key_press(self, key, key_modifiers):
-        """
-        Called whenever a key on the keyboard is pressed.
-
-        For a full list of keys, see:
-        https://api.arcade.academy/en/latest/arcade.key.html
-        """
-        pass
-
-    def on_key_release(self, key, key_modifiers):
-        """
-        Called whenever the user lets off a previously pressed key.
-        """
-        pass
-
-    def on_mouse_motion(self, x, y, delta_x, delta_y):
-        """
-        Called whenever the mouse moves.
-        """
-        pass
-
-    def on_mouse_press(self, x, y, button, key_modifiers):
-        """
-        Called when the user presses a mouse button.
-        """
-        pass
-
-    def on_mouse_release(self, x, y, button, key_modifiers):
-        """
-        Called when a user releases a mouse button.
-        """
-        pass
+    # Draw the trunk
+    arcade.draw_lrtb_rectangle_filled(x + 30, x + 50, y - 100, y - 140,
+                                      arcade.color.DARK_BROWN)
 
 
 def main():
-    """ Main function """
-    game = MyGame(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-    game.setup()
+    """
+    This is the main program.
+    """
+
+    # Open the window
+    arcade.open_window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+
+    # Start the render process. This must be done before any drawing commands.
+    arcade.start_render()
+
+    # Call our drawing functions.
+    draw_background()
+
+    draw_pine_tree(350, 320)
+    draw_pine_tree(450, 320)
+    draw_bird(70, 500)
+    draw_bird(100, 250)
+    draw_bird(200, 360)
+
+    # Draw a sun
+    arcade.draw_circle_filled(500, 550, 40, arcade.color.YELLOW)
+
+    # Rays to the left, right, up, and down
+    arcade.draw_line(500, 550, 400, 550, arcade.color.YELLOW, 3)
+    arcade.draw_line(500, 550, 600, 550, arcade.color.YELLOW, 3)
+    arcade.draw_line(500, 550, 500, 450, arcade.color.YELLOW, 3)
+    arcade.draw_line(500, 550, 500, 650, arcade.color.YELLOW, 3)
+
+    # Diagonal ray
+    arcade.draw_line(500, 550, 550, 600, arcade.color.YELLOW, 3)
+    arcade.draw_line(500, 550, 550, 500, arcade.color.YELLOW, 3)
+    arcade.draw_line(500, 550, 450, 600, arcade.color.YELLOW, 3)
+    arcade.draw_line(500, 550, 450, 500, arcade.color.YELLOW, 3)
+
+    # --- Draw the tractor ---
+
+    # Draw the engine
+    arcade.draw_rectangle_filled(600, 120, 140, 70, arcade.color.GRAY)
+    arcade.draw_rectangle_filled(590, 105, 90, 40, arcade.color.BLACK)
+
+    # Draw the smoke stack
+    arcade.draw_rectangle_filled(580, 175, 10, 40, arcade.color.BLACK)
+
+    # Back wheel
+    arcade.draw_circle_filled(490, 110, 50, arcade.color.BLACK)
+    arcade.draw_circle_filled(490, 110, 45, arcade.color.BLACK_OLIVE)
+    arcade.draw_circle_filled(490, 110, 35, arcade.color.OLD_LACE)
+    arcade.draw_circle_filled(490, 110, 10, arcade.color.RED)
+
+    # Front wheel
+    arcade.draw_circle_filled(650, 90, 30, arcade.color.BLACK)
+    arcade.draw_circle_filled(650, 90, 25, arcade.color.BLACK_OLIVE)
+    arcade.draw_circle_filled(650, 90, 18, arcade.color.OLD_LACE)
+    arcade.draw_circle_filled(650, 90, 5, arcade.color.RED)
+    # Tree trunk
+    arcade.draw_rectangle_filled(250, 220, 20, 80, arcade.csscolor.SIENNA)
+    arcade.draw_circle_filled(250, 250, 30, arcade.csscolor.DARK_GREEN)
+
+    arcade.draw_ellipse_filled(200, 100, 200, 100, arcade.color.BLUE)
+
+    # Draw the cloud
+    arcade.draw_circle_filled(100, 600, 40, arcade.color.WHITE)
+    arcade.draw_circle_filled(140, 600, 50, arcade.color.WHITE)
+    arcade.draw_circle_filled(180, 600, 40, arcade.color.WHITE)
+    arcade.draw_circle_filled(120, 570, 40, arcade.color.WHITE)
+    arcade.draw_circle_filled(160, 570, 40, arcade.color.WHITE)
+
+    # Finish the render.
+    # Nothing will be drawn without this.
+    # Must happen after all draw commands
+    arcade.finish_render()
+
+    # Keep the window up until someone closes it.
     arcade.run()
 
 
