@@ -1,97 +1,118 @@
-#problem 1
-for i in range(10):
-    print("*", end=" ")
-print("\n")
-#problem 2
-for i in range(10):
-    print("*", end=" " )
-print("")
-for i in range(5):
-    print("*", end=" ")
-print()
-for i in range(20):
-        print("*", end=" ")
-print("\n")
-#problem 3
-for row in range(10):
-    for column in range(10):
-        print("*", end=" ")
-    print("")
-#problem 4
-for row in range(10):
-    for column in range(5):
-        print("*", end=" ")
-    print("")
-#problem 5
-for row in range(5):
-    for column in range(20):
-        print("*", end=" ")
-    print("")
-#problem 6
-for i in range(10):
-    for j in range(10):
-        print(j, end=" ")
-    print("")
-#problem 7
-for i in range(10):
-    for j in range(10):
-        print(i, end=" ")
-    print("")
-#problem 8
-for i in range(10):
-    for j in range(i + 1):
-        print(i, end=" ")
-    print("")
-#problem 9
-for i in range(10):
-    for j in range(i):
-        print(" ", end=" ")
-    for j in range(10 - i):
-        print(j, end=" ")
-    print()
+import arcade
 
-for i in range(10):
-    for j in range(10-i):
-        print(j, end=" ")
-    print()
 
-#problem 10
+def draw_section_outlines():
+    # Draw squares on bottom
+    arcade.draw_rectangle_outline(150, 150, 300, 300, arcade.color.BLACK)
+    arcade.draw_rectangle_outline(450, 150, 300, 300, arcade.color.BLACK)
+    arcade.draw_rectangle_outline(750, 150, 300, 300, arcade.color.BLACK)
+    arcade.draw_rectangle_outline(1050, 150, 300, 300, arcade.color.BLACK)
 
-for i in range(1, 10):
-    for j in range(1, 10):
-        if i * j < 10:
-            print(" ", end="")
+    # Draw squares on top
+    arcade.draw_rectangle_outline(150, 450, 300, 300, arcade.color.BLACK)
+    arcade.draw_rectangle_outline(450, 450, 300, 300, arcade.color.BLACK)
+    arcade.draw_rectangle_outline(750, 450, 300, 300, arcade.color.BLACK)
+    arcade.draw_rectangle_outline(1050, 450, 300, 300, arcade.color.BLACK)
 
-        print(i * j, end=" ")
 
-    print()
+def draw_section_1():
+    for row in range(30):
+        for column in range(30):
+            x = (column * 10) + 5
+            y = (row * 10) + 5
+            arcade.draw_rectangle_filled(x, y, 5, 5, arcade.color.WHITE)
 
-for i in range(1, 13):
-    for j in range(1, 13):
-        if i * j < 100:
-            print(" ", end="")
-        if i * j < 10:
-            print(" ", end="")
 
-        print(i * j, end=" ")
+def draw_section_2():
+    for row in range(30):
+        for column in range(30):
+            x = (column * 10) + 305
+            y = 295 - (row * 10)
+            if column % 2 == 0:
+                arcade.draw_rectangle_filled(x, y, 5, 5, arcade.color.WHITE)
+            else:
+                arcade.draw_rectangle_filled(x, y, 5, 5, arcade.color.BLACK)
 
-    print()
 
-#problem 11
-for i in range(10):
-    for j in range(10 - i):
-        print (" ", end=" ")
-    for j in range(1, i + 1):
-        print (j, end=" ")
-    for j in range(i - 1, 0, -1):
-        print (j, end=" ")
-    print()
-#problem 12
-for i in range(10):
-    for j in range(10 - i):
-        print (" ", end=" ")
-    for j in range(1, i + 1):
-        print (j, end=" ")
-    for j in range(i - 1, 0, -1):
-        print (j, end=" ")
-    print()
+def draw_section_3():
+    for row in range(30):
+        for column in range(30):
+            x = (column * 10) + 605
+            y = (row * 10) + 5
+            if row % 2 == 0:
+                arcade.draw_rectangle_filled(x, y, 5, 5, arcade.color.WHITE)
+            else:
+                arcade.draw_rectangle_filled(x, y, 5, 5, arcade.color.BLACK)
+
+
+def draw_section_4():
+    for row in range(30):
+        for column in range(30):
+            x = (column * 10) + 905
+            y = 295 - (row * 10)
+            if (column + row) % 2 and column % 2 == 0:
+                arcade.draw_rectangle_filled(x, y, 5, 5, arcade.color.WHITE)
+            else:
+                arcade.draw_rectangle_filled(x, y, 5, 5, arcade.color.BLACK)
+
+
+def draw_section_5():
+    for row in range(30):
+        for column in range(30 - row):
+            x = 295 - (column * 10)
+            y = (row * 10) + 305
+            arcade.draw_rectangle_filled(x, y, 5, 5, arcade.color.WHITE)
+
+
+def draw_section_6():
+    for row in range(31):
+        for column in range(row + 1, 31):
+            x = 605 - (column * 10)
+            y = (row * 10) + 305
+            arcade.draw_rectangle_filled(x, y, 5, 5, arcade.color.WHITE)
+
+
+def draw_section_7():
+    for row in range(31):
+        for column in range(31 - row, 31):
+            x = 905 - (column * 10)
+            y = (row * 10) + 295
+            arcade.draw_rectangle_filled(x, y, 5, 5, arcade.color.WHITE)
+
+
+def draw_section_8():
+    for row in range(30):
+        for column in range(row + 1):
+            x = 1195 - (column * 10)
+            y = (row * 10) + 305
+            arcade.draw_rectangle_filled(x, y, 5, 5, arcade.color.WHITE)
+
+
+def main():
+    # Create a window
+    arcade.open_window(1200, 600, "Lab 05 - Loopy Lab")
+    arcade.set_background_color(arcade.color.AIR_FORCE_BLUE)
+
+    arcade.start_render()
+
+    # Draw the outlines for the sections
+    draw_section_outlines()
+
+    # Draw the sections
+    draw_section_1()
+    draw_section_2()
+    draw_section_3()
+    draw_section_4()
+    draw_section_5()
+    draw_section_6()
+    draw_section_7()
+    draw_section_8()
+
+    arcade.finish_render()
+
+    arcade.run()
+
+
+main()
+
+
