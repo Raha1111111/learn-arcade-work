@@ -1,56 +1,71 @@
+class Room:
+    def __init__(self, description='', north=None, east=None, south=None, west=None):
+        self.description = description
+        self.north = north
+        self.east = east
+        self.south = south
+        self.west = west
 
-
-import arcade
-
-
-class MyGame(arcade.Window):
-    def __init__(self, width, height, title):
-        super().__init__(width, height, title)
-
-        # Constants for grid setup
-        self.WIDTH = 20
-        self.HEIGHT = 20
-        self.MARGIN = 5
-        self.ROW_COUNT = 10
-        self.COLUMN_COUNT = 10
-
-        # Calculate total screen size
-        self.SCREEN_WIDTH = (self.WIDTH + self.MARGIN) * self.COLUMN_COUNT + self.MARGIN
-        self.SCREEN_HEIGHT = (self.HEIGHT + self.MARGIN) * self.ROW_COUNT + self.MARGIN
-
-        # Initialize grid with all white squares
-        self.grid = [[0 for _ in range(self.COLUMN_COUNT)] for _ in range(self.ROW_COUNT)]
-
-        # Set background color
-        arcade.set_background_color(arcade.color.BLACK)
-
-    def on_draw(self):
-        arcade.start_render()
-
-        # Draw grid squares
-        for row in range(self.ROW_COUNT):
-            for column in range(self.COLUMN_COUNT):
-                x = (self.MARGIN + self.WIDTH) * column + self.MARGIN + self.WIDTH / 2
-                y = (self.MARGIN + self.HEIGHT) * row + self.MARGIN + self.HEIGHT / 2
-                color = arcade.color.WHITE if self.grid[row][column] == 0 else arcade.color.GREEN
-                arcade.draw_rectangle_filled(x, y, self.WIDTH, self.HEIGHT, color)
-
-    def on_mouse_press(self, x, y, button, modifiers):
-        # Convert screen coordinates to grid coordinates
-        column = x // (self.WIDTH + self.MARGIN)
-        row = y // (self.HEIGHT + self.MARGIN)
-
-        # Toggle the color of the clicked square
-        if 0 <= row < self.ROW_COUNT and 0 <= column < self.COLUMN_COUNT:
-            if self.grid[row][column] == 0:
-                self.grid[row][column] = 1
-            else:
-                self.grid[row][column] = 0
 
 def main():
-    game = MyGame(255, 255, "Grid Game")
-    arcade.run()
+    # Create room instances
+    balcony1 = Room("You are on the first balcony. There is a door to the north.")
+    bedroom = Room("You are in the bedroom. There is a door to the west.")
+    kitchen = Room("You are in the kitchen. There are doors to the north and east.")
+    dining_hall = Room("You are in the dining hall. There are doors to the west, east, and south.")
+    living_room = Room("You are in the living room. There are doors to the north, east.")
+    balcony2 = Room("You are on the second balcony. There is a door to the east.")
+
+    # Set room connections
+    balcony1.north = bedroom
+    kitchen.east = balcony1
+    kitchen.west = living_room
+    bedroom.west = dining_hall
+    living_room.east = kitchen
+    living_room.north = balcony2
+    dining_hall.west = balcony2
+    dining_hall.south = kitchen
+    balcony2.east = dining_hall
+
+    # Populate room list
+    room_list = [balcony1, kitchen, bedroom, living_room, dining_hall, balcony2]
+
+    # Set current room
+    current_room = living_room
+
+    # Print current room description
+    print(current_room.description)
+
+    # Game loop
+    done = False
+    while not done:
+        print("\n")
+        user_input = input("What do you want to do? ").lower()
+
+        if user_input == "quit":
+            print("Quitting the game.")
+            done = True
+        elif user_input in ["n", "north", "s", "south", "e", "east", "w", "west"]:
+            direction = ""
+            if user_input == "n":
+                direction = "north"
+            elif user_input == "s":
+                direction = "south"
+            elif user_input == "e":
+                direction = "east"
+            elif user_input == "w":
+                direction = "west"
+
+            next_room = getattr(current_room, direction)
+            if next_room is None:
+                print("You can't go that way.")
+            else:
+                current_room = next_room
+                print(current_room.description)
+        else:
+            print("Sorry, I don't understand that command.")
 
 
-if __name__ == "__main__":
+if name == "__main__":
     main()
+
